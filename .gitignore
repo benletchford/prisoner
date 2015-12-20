@@ -1,0 +1,8 @@
+node_modules
+*.sublime-workspace
+*.sublime-project
+
+test/specs/*.js
+test/testBundle.js
+1.testBundle.js
+

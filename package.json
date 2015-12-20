@@ -1,0 +1,27 @@
+{
+  "name": "prisoner",
+  "description": "Represent, solve and generate Unblock Me / Rush Hour style games.",
+  "author": "Ben Letchford <contact@benl.com.au>",
+  "version": "0.0.1",
+  "private": false,
+  "main": "prisoner.js",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.9.3",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-mocha-phantomjs": "^0.7.0",
+    "grunt-webpack": "^1.0.8",
+    "mocha": "^2.2.5",
+    "mocha-loader": "^0.7.1",
+    "webpack": "^1.9.10"
+  },
+  "license": "MIT",
+  "files": [
+    "prisoner.js",
+    "prisoner.min.js"
+  ]
+}
