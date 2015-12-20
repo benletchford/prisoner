@@ -1,0 +1,21 @@
+{
+  "name": "prisoner",
+  "description": "Represent, solve and generate Unblock Me / Rush Hour style games.",
+  "main": "prisoner.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "authors": [
+    "Ben Letchford"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/benletchford/prisoner",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+  ]
+}
