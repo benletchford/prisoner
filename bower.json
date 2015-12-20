@@ -1,6 +1,7 @@
 {
   "name": "prisoner",
   "description": "Represent, solve and generate Unblock Me / Rush Hour style games.",
+  "version": "0.0.1",
   "main": "prisoner.js",
   "moduleType": [
     "amd",
