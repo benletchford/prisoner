@@ -2,6 +2,10 @@
   "name": "prisoner",
   "description": "Represent, solve and generate Unblock Me / Rush Hour style games.",
   "author": "Ben Letchford <contact@benl.com.au>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benletchford/prisoner.git"
+  },
   "version": "0.0.1",
   "private": false,
   "main": "prisoner.js",
