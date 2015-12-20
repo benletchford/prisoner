@@ -14,9 +14,10 @@
   "license": "MIT",
   "homepage": "https://github.com/benletchford/prisoner",
   "ignore": [
-    "**/.*",
     "node_modules",
-    "bower_components",
-    "test"
+    "src",
+    "test",
+    "Gruntfile.coffee",
+    "package.json"
   ]
 }
