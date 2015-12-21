@@ -25,7 +25,7 @@ define (require) ->
       game.addPiece(new Piece {x: 4, y: 2}, {x: 4, y: 4})
       game.addPiece(new Piece {x: 5, y: 3}, {x: 5, y: 4})
 
-      converted_game = arrayToGame(
+      convertedGame = arrayToGame(
         [
           [2, 0, 0, 4, 0,  5]
           [2, 3, 3, 4, 0,  5]
@@ -36,4 +36,4 @@ define (require) ->
         ]
       )
 
-      expect(converted_game).to.deep.equal(game)
+      expect(convertedGame).to.deep.equal(game)

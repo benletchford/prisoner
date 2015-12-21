@@ -38,9 +38,9 @@ define (require) ->
         ]
       )
 
-      solved_game = solve(game)
+      solvedGame = solve(game)
 
-      expect(solved_game.matrix).to.deep.equal(
+      expect(solvedGame.matrix).to.deep.equal(
         [
           [0, 0, 8, 4, 0,  5]
           [3, 3, 8, 4, 0,  5]
@@ -82,9 +82,9 @@ define (require) ->
         ]
       )
 
-      solved_game = solve(game)
+      solvedGame = solve(game)
 
-      expect(solved_game.matrix).to.deep.equal(
+      expect(solvedGame.matrix).to.deep.equal(
         [
           [2,  0,  4,  3, 3, 6]
           [2,  0,  4,  0, 0, 6]
