@@ -19,7 +19,7 @@ The module contains the following:
 
     ```
     game = new prisoner.Game({
-      width: 4, height: 4, prisoner.Piece({x: 2, y: 2}, {x: 3, y: 2})
+      width: 4, height: 4, new prisoner.Piece({x: 2, y: 2}, {x: 3, y: 2})
     });
     ```
 
@@ -44,7 +44,7 @@ The module contains the following:
     ]);
     ```
 
-* solve(game) -> solves the game and returns the solved state.
+* solve(game) - solves the game and returns the solved state.
 
 Representing a game
 ======
