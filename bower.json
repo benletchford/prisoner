@@ -18,6 +18,7 @@
     "node_modules",
     "src",
     "test",
+    "unblockme.png",
     "Gruntfile.coffee",
     "package.json"
   ]
