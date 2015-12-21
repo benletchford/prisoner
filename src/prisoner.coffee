@@ -106,6 +106,25 @@
 
         true
 
+      clone: ->
+        cloned_game = new Game
+          width: @width
+          height: @height
+          prisoner: new Piece({
+            x: @pieces[0].begin.x, y: @pieces[0].begin.y
+          }, {
+            x: @pieces[0].end.x, y: @pieces[0].end.y
+          })
+
+        for i in [1...@pieces.length]
+          cloned_game.addPiece new Piece({
+            x: @pieces[i].begin.x, y: @pieces[i].begin.y
+          }, {
+            x: @pieces[i].end.x, y: @pieces[i].end.y
+          })
+
+        cloned_game
+
   arrayToGame = (array) ->
     height = array.length
     width  = array[0].length
@@ -153,11 +172,8 @@
         checked.push json_game
 
         for i in [0...game.pieces.length]
-          pos_game = JSON.parse json_game
-          pos_game.__proto__ = game.__proto__
-
-          neg_game = JSON.parse json_game
-          neg_game.__proto__ = game.__proto__
+          pos_game = game.clone()
+          neg_game = game.clone()
 
           if pos_game.move(i, true)
             queue.push pos_game
