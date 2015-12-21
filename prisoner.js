@@ -118,6 +118,31 @@
         return true;
       };
 
+      _Class.prototype.clone = function() {
+        var cloned_game, i, j, ref;
+        cloned_game = new Game({
+          width: this.width,
+          height: this.height,
+          prisoner: new Piece({
+            x: this.pieces[0].begin.x,
+            y: this.pieces[0].begin.y
+          }, {
+            x: this.pieces[0].end.x,
+            y: this.pieces[0].end.y
+          })
+        });
+        for (i = j = 1, ref = this.pieces.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+          cloned_game.addPiece(new Piece({
+            x: this.pieces[i].begin.x,
+            y: this.pieces[i].begin.y
+          }, {
+            x: this.pieces[i].end.x,
+            y: this.pieces[i].end.y
+          }));
+        }
+        return cloned_game;
+      };
+
       return _Class;
 
     })();
@@ -165,10 +190,8 @@
           json_game = JSON.stringify(game);
           checked.push(json_game);
           for (i = j = 0, ref = game.pieces.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-            pos_game = JSON.parse(json_game);
-            pos_game.__proto__ = game.__proto__;
-            neg_game = JSON.parse(json_game);
-            neg_game.__proto__ = game.__proto__;
+            pos_game = game.clone();
+            neg_game = game.clone();
             if (pos_game.move(i, true)) {
               queue.push(pos_game);
             }
