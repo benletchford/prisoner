@@ -107,7 +107,7 @@
         true
 
       clone: ->
-        cloned_game = new Game
+        clonedGame = new Game
           width: @width
           height: @height
           prisoner: new Piece({
@@ -117,13 +117,13 @@
           })
 
         for i in [1...@pieces.length]
-          cloned_game.addPiece new Piece({
+          clonedGame.addPiece new Piece({
             x: @pieces[i].begin.x, y: @pieces[i].begin.y
           }, {
             x: @pieces[i].end.x, y: @pieces[i].end.y
           })
 
-        cloned_game
+        clonedGame
 
   arrayToGame = (array) ->
     height = array.length
@@ -157,9 +157,9 @@
 
     game
 
-  solve = (initial_game) ->
+  solve = (initialGame) ->
     checked = []
-    queue   = [initial_game]
+    queue   = [initialGame]
 
     while queue.length
       game = queue.pop()
@@ -168,17 +168,17 @@
         return game
 
       else if checked.indexOf(JSON.stringify(game)) is -1
-        json_game = JSON.stringify(game)
-        checked.push json_game
+        jsonGame = JSON.stringify(game)
+        checked.push jsonGame
 
         for i in [0...game.pieces.length]
-          pos_game = game.clone()
-          neg_game = game.clone()
+          posGame = game.clone()
+          negGame = game.clone()
 
-          if pos_game.move(i, true)
-            queue.push pos_game
-          if neg_game.move(i, false)
-            queue.push neg_game
+          if posGame.move(i, true)
+            queue.push posGame
+          if negGame.move(i, false)
+            queue.push negGame
 
     return false
 
