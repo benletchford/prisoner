@@ -13,6 +13,39 @@ or
 
 The `prisoner.js` defines a module that works in Node, AMD or it will create a browser global (`prisoner`).
 
+The module contains the following:
+
+* Game({width, height, prisoner}) - a class that represents a state of the game and holds pieces. The constructor takes a width, height and prisoner (Piece) object. For example:
+
+    ```
+    game = new prisoner.Game({
+      width: 4, height: 4, prisoner.Piece({x: 2, y: 2}, {x: 3, y: 2})
+    });
+    ```
+
+    * Game.addPiece(piece) - add a piece to the game.
+    * Game.move(pieceNumber, direction) - move a specific piece.
+      `pieceNumber` is the zero based order the pieces were added. So the prisoner will always be `0`.
+
+      `direction` is a boolean the represents whether or not the movement will be positive or negative. For example if the piece is horizontal, `false` will move it `right` and `true` will move it `left`. If the piece is vertical `false` will move it `up` and `true` will move it `down`.
+
+    * Game.canExit() - returns a boolean that represents if the prisoner can exit or not.
+
+* arrayToGame(array) - converts a multidimensional array to a `Game`. For example:
+
+    ```
+    game = prisoner.arrayToGame([
+      [2, 0, 0, 4, 0,  5],
+      [2, 3, 3, 4, 0,  5],
+      [2, 0, 1, 1, 10, 0],
+      [6, 6, 6, 0, 10, 11],
+      [0, 0, 8, 0, 10, 11],
+      [7, 7, 8, 9, 9,  0]
+    ]);
+    ```
+
+* solve(game) -> solves the game and returns the solved state.
+
 Representing a game
 ======
 Let's represent the following game (taken from Unblock Me):
@@ -79,10 +112,10 @@ game = prisoner.arrayToGame([
   [6, 6, 6, 0, 10, 11],
   [0, 0, 8, 0, 10, 11],
   [7, 7, 8, 9, 9,  0]
-])
+]);
 
 // `prisoner.solve` will return the solved state of the game - the state at which the prisoner can exit.
-solvedGame = prisoner.solve(game); 
+solvedGame = prisoner.solve(game);
 ```
 
 Because the `prisoner.solve` returns another game we have all the familiar functions, so the solved game looks like:
