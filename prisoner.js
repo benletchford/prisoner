@@ -241,7 +241,7 @@
     solve = function(initialGame) {
       var _findSolution, diffs, k, len, parent, solvedGame, step, steps;
       _findSolution = function(initialGame) {
-        var checked, game, i, j, jsonGame, k, l, m, negGame, posGame, queue, ref;
+        var checked, game, i, j, jsonGame, k, l, m, negGame, posGame, potentialEmptyCells, queue, ref, ref1, ref2;
         checked = [];
         queue = [initialGame];
         while (queue.length) {
@@ -252,8 +252,9 @@
           jsonGame = JSON.stringify(game.matrix);
           if (checked.indexOf(jsonGame) === -1) {
             checked.push(jsonGame);
+            potentialEmptyCells = Math.max(game.width, game.height) - 2;
             for (i = k = 0, ref = game.pieces.length; 0 <= ref ? k < ref : k > ref; i = 0 <= ref ? ++k : --k) {
-              for (j = l = 1; l <= 4; j = ++l) {
+              for (j = l = 1, ref1 = potentialEmptyCells; 1 <= ref1 ? l <= ref1 : l >= ref1; j = 1 <= ref1 ? ++l : --l) {
                 posGame = game.clone();
                 if (posGame.move(i, true, j)) {
                   posGame.parent = game;
@@ -265,7 +266,7 @@
                   queue.push(posGame);
                 }
               }
-              for (j = m = 1; m <= 4; j = ++m) {
+              for (j = m = 1, ref2 = potentialEmptyCells; 1 <= ref2 ? m <= ref2 : m >= ref2; j = 1 <= ref2 ? ++m : --m) {
                 negGame = game.clone();
                 if (negGame.move(i, false, j)) {
                   negGame.parent = game;

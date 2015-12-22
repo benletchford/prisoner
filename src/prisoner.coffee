@@ -186,8 +186,11 @@
         if checked.indexOf(jsonGame) is -1
           checked.push jsonGame
 
+          # Minus two because the smallest occupies 2 cells.
+          potentialEmptyCells = Math.max(game.width, game.height) - 2
+
           for i in [0...game.pieces.length]
-            for j in [1..4]
+            for j in [1..potentialEmptyCells]
               posGame = game.clone()
 
               if posGame.move(i, true, j)
@@ -196,7 +199,7 @@
 
                 queue.push posGame
 
-            for j in [1..4]
+            for j in [1..potentialEmptyCells]
               negGame = game.clone()
 
               if negGame.move(i, false, j)
