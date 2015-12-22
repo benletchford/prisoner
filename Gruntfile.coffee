@@ -24,8 +24,6 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON 'package.json'
 
     clean:
-      test:
-        ['test/specs/**/*.js']
       prisoner:
         ['prisoner.js', 'prisoner.min.js']
 
@@ -65,7 +63,6 @@ module.exports = (grunt) ->
           'prisoner.js': 'src/prisoner.coffee'
 
   grunt.registerTask 'test', [
-    'clean:test'
     'webpack:test'
     'mocha_phantomjs'
   ]
