@@ -20,9 +20,9 @@ define (require) ->
         ]
       )
 
-      solvedGame = solve(game)
+      solvedData = solve(game)
 
-      expect(solvedGame.solution.matrix).to.deep.equal(
+      expect(solvedData.solution.matrix).to.deep.equal(
         [
           [0, 0, 0, 0, 0, 0]
           [0, 0, 0, 0, 0, 0]
@@ -33,7 +33,7 @@ define (require) ->
         ]
       )
 
-      expect(solvedGame.steps).to.have.length.of 2
+      expect(solvedData.steps).to.have.length.of 2
 
     xit 'should solve game correctly', ->
       @timeout 10000
@@ -49,9 +49,9 @@ define (require) ->
         ]
       )
 
-      solvedGame = solve(game)
+      solvedData = solve(game)
 
-      expect(solvedGame.solution.matrix).to.deep.equal(
+      expect(solvedData.solution.matrix).to.deep.equal(
         [
           [0, 0, 8, 4, 0,  5]
           [3, 3, 8, 4, 0,  5]
@@ -62,7 +62,7 @@ define (require) ->
         ]
       )
 
-      expect(solvedGame.steps).to.have.length.of 15
+      expect(solvedData.steps).to.have.length.of 15
 
     xit 'should solve tricky game', ->
       @timeout 40000
@@ -78,9 +78,9 @@ define (require) ->
         ]
       )
 
-      solvedGame = solve(game)
+      solvedData = solve(game)
 
-      expect(solvedGame.solution.matrix).to.deep.equal(
+      expect(solvedData.solution.matrix).to.deep.equal(
         [
           [2,  0,  4,  3, 3, 6]
           [2,  0,  4,  0, 0, 6]
@@ -91,4 +91,4 @@ define (require) ->
         ]
       )
 
-      expect(solvedGame.steps).to.have.length.of 25
+      expect(solvedData.steps).to.have.length.of 25

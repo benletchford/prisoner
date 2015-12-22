@@ -1,5 +1,5 @@
 # prisoner
-Represent, solve and generate Unblock Me / Rush Hour style games.
+Represent, solve and generate Unblock Me / Rush Hour style puzzle games in JavaScript.
 
 Using
 ======
@@ -24,10 +24,12 @@ The module contains the following:
     ```
 
     * Game.addPiece(piece) - add a piece to the game.
-    * Game.move(pieceNumber, direction) - move a specific piece.
+    * Game.move(pieceNumber, direction, steps) - move a specific piece in a specific direction a specific number of steps. Returns `false` if the movement is invalid.
       `pieceNumber` is the zero based order the pieces were added. So the prisoner will always be `0`.
 
       `direction` is a boolean the represents whether or not the movement will be positive or negative. For example if the piece is horizontal, `false` will move it `right` and `true` will move it `left`. If the piece is vertical `false` will move it `up` and `true` will move it `down`.
+
+      `steps` is the amount of moves it should take in that direction. Default is 1.
 
     * Game.canExit() - returns a boolean that represents if the prisoner can exit or not.
 
@@ -44,13 +46,13 @@ The module contains the following:
     ]);
     ```
 
-* solve(game) - solves the game and returns the solved state.
+* solve(game) - solves the game and returns an object that contains a game representing the solution, an array of games that represent the steps needed to win and the diffs corresponding to each step ({solution, steps, diffs}). Returns false if it was unable to solve.
 
 Representing a game
 ======
 Let's represent the following game (taken from Unblock Me):
 
-![Image of Yaktocat](https://raw.githubusercontent.com/benletchford/prisoner/master/unblock.png)
+![Image of Unblock Me](https://raw.githubusercontent.com/benletchford/prisoner/master/unblock.png)
 
 You can either create a new `Game` object yourself and add the pieces manually like this:
 
@@ -114,14 +116,10 @@ game = prisoner.arrayToGame([
   [7, 7, 8, 9, 9,  0]
 ]);
 
-// `prisoner.solve` will return the solved state of the game - the state at which the prisoner can exit.
-solvedGame = prisoner.solve(game);
-```
+// `prisoner.solve` will return an object that has a `solution` game object.
+solvedData = prisoner.solve(game);
 
-Because the `prisoner.solve` returns another game we have all the familiar functions, so the solved game looks like:
-
-```
->>> solvedGame.matrix
+>>> solvedData.solution.matrix
 [
   [0, 0, 8, 4, 0,  5],
   [3, 3, 8, 4, 0,  5],

@@ -1,6 +1,6 @@
 {
   "name": "prisoner",
-  "description": "Represent, solve and generate Unblock Me / Rush Hour style games.",
+  "description": "Represent, solve and generate Unblock Me / Rush Hour style puzzle games in JavaScript.",
   "version": "0.0.1",
   "main": "prisoner.js",
   "moduleType": [

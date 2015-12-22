@@ -1,6 +1,6 @@
 {
   "name": "prisoner",
-  "description": "Represent, solve and generate Unblock Me / Rush Hour style games.",
+  "description": "Represent, solve and generate Unblock Me / Rush Hour style puzzle games in JavaScript.",
   "author": "Ben Letchford <contact@benl.com.au>",
   "repository": {
     "type": "git",
