@@ -34,62 +34,77 @@
       addPiece: (piece) ->
         @pieces.push piece
 
-        num = @pieces.length
+        designatedNum = @pieces.length
 
         for x in [piece.begin.x...piece.end.x + 1]
           for y in [piece.begin.y...piece.end.y + 1]
-            @matrix[y][x] = num
+            @matrix[y][x] = designatedNum
 
-      move: (i, direction) ->
-        piece = @pieces[i]
+      move: (pieceIndex, direction, steps=1) ->
+        piece = @pieces[pieceIndex]
+        designatedNum = pieceIndex + 1
+
+        cellsThatNeedToBeEmpty = []
 
         if piece.horizontal
           if direction
-            if (piece.end.x + 1) < @matrix[0].length \
-              and @matrix[piece.begin.y][piece.end.x + 1] == 0
-                @matrix[piece.begin.y][piece.begin.x] = 0
-                @matrix[piece.begin.y][piece.end.x + 1] = i + 1
-
-                piece.begin.x += 1
-                piece.end.x += 1
-
-                return true
+            if (piece.end.x + steps) < @width
+              for i in [piece.end.x + 1..piece.end.x + steps]
+                cellsThatNeedToBeEmpty.push {x: i, y: piece.begin.y}
+            else return false
 
           else
-            if (piece.begin.x - 1) >= 0 \
-              and @matrix[piece.begin.y][piece.begin.x - 1] == 0
-                @matrix[piece.begin.y][piece.end.x] = 0
-                @matrix[piece.begin.y][piece.begin.x - 1] = i + 1
+            if (piece.begin.x - steps) >= 0
+              for i in [piece.begin.x - 1..piece.begin.x - steps]
+                cellsThatNeedToBeEmpty.push {x: i, y: piece.begin.y}
+            else return false
+        else
+          if direction
+            if (piece.end.y + steps) < @height
+              for i in [piece.end.y + 1..piece.end.y + steps]
+                cellsThatNeedToBeEmpty.push {x: piece.begin.x, y: i}
+            else return false
 
-                piece.begin.x -= 1
-                piece.end.x -= 1
+          else
+            if (piece.begin.y - steps) >= 0
+              for i in [piece.begin.y - 1..piece.begin.y - steps]
+                cellsThatNeedToBeEmpty.push {x: piece.begin.x, y: i}
+            else return false
 
-                return true
+        for cell in cellsThatNeedToBeEmpty
+          if @matrix[cell.y][cell.x] != 0 then return false
+
+        # Zero out
+        for x in [piece.begin.x...piece.end.x + 1]
+          for y in [piece.begin.y...piece.end.y + 1]
+            @matrix[y][x] = 0
+
+        newBegin = {x: piece.begin.x, y: piece.begin.y}
+        newEnd   = {x: piece.end.x, y: piece.end.y}
+        if piece.horizontal
+          if direction
+            newBegin.x += steps
+            newEnd.x += steps
+          else
+            newBegin.x -= steps
+            newEnd.x -= steps
 
         else
           if direction
-            if (piece.end.y + 1) < @matrix.length \
-              and @matrix[piece.end.y + 1][piece.begin.x] == 0
-                @matrix[piece.begin.y][piece.begin.x] = 0
-                @matrix[piece.end.y + 1][piece.begin.x] = i + 1
-
-                piece.begin.y += 1
-                piece.end.y += 1
-
-                return true
-
+            newBegin.y += steps
+            newEnd.y += steps
           else
-            if (piece.begin.y - 1) >= 0 \
-              and @matrix[piece.begin.y - 1][piece.begin.x] == 0
-                @matrix[piece.end.y][piece.begin.x] = 0
-                @matrix[piece.begin.y - 1][piece.begin.x] = i + 1
+            newBegin.y -= steps
+            newEnd.y -= steps
 
-                piece.begin.y -= 1
-                piece.end.y -= 1
+        piece.begin = newBegin
+        piece.end = newEnd
 
-                return true
+        for x in [piece.begin.x...piece.end.x + 1]
+          for y in [piece.begin.y...piece.end.y + 1]
+            @matrix[y][x] = designatedNum
 
-        false
+        return true
 
       canExit: ->
         prisoner = @pieces[0]
@@ -158,28 +173,68 @@
     game
 
   solve = (initialGame) ->
-    checked = []
-    queue   = [initialGame]
+    _findSolution = (initialGame) ->
+      checked = []
+      queue   = [initialGame]
 
-    while queue.length
-      game = queue.pop()
+      while queue.length
+        game = queue.shift()
 
-      if game.canExit()
-        return game
+        return game if game.canExit()
 
-      else if checked.indexOf(JSON.stringify(game)) is -1
-        jsonGame = JSON.stringify(game)
-        checked.push jsonGame
+        jsonGame = JSON.stringify(game.matrix)
+        if checked.indexOf(jsonGame) is -1
+          checked.push jsonGame
 
-        for i in [0...game.pieces.length]
-          posGame = game.clone()
-          negGame = game.clone()
+          for i in [0...game.pieces.length]
+            for j in [1..4]
+              posGame = game.clone()
 
-          if posGame.move(i, true)
-            queue.push posGame
-          if negGame.move(i, false)
-            queue.push negGame
+              if posGame.move(i, true, j)
+                posGame.parent = game
+                posGame.diff = piece: i, direction: true, steps: j
 
-    return false
+                queue.push posGame
+
+            for j in [1..4]
+              negGame = game.clone()
+
+              if negGame.move(i, false, j)
+                negGame.parent = game
+                negGame.diff = piece: i, direction: false, steps: j
+
+                queue.push negGame
+
+      return false
+
+    solvedGame = _findSolution(initialGame)
+    if solvedGame
+      steps = []
+
+      steps.push solvedGame
+      parent = solvedGame.parent
+      while parent
+        steps.push parent
+        parent = parent.parent
+
+      # Remove the initial game
+      steps.pop()
+      steps = steps.reverse()
+
+      diffs = []
+      for step in steps
+        diffs.push step.diff
+
+        delete step.diff
+        delete step.parent
+
+      return {
+        diffs: diffs
+        steps: steps
+        solution: solvedGame
+      }
+
+    else
+      return false
 
   {Piece, Game, arrayToGame, solve}
