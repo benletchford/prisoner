@@ -47,7 +47,7 @@ module.exports = (grunt) ->
             '.coffee'
             ''
           ]
-        entry: './test/specRunner.js'
+        entry: './test/SpecRunner.js'
         output:
           path: __dirname + '/test'
           filename: 'testBundle.js'

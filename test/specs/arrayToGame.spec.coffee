@@ -8,7 +8,28 @@ define (require) ->
 
   describe 'arrayToGame', ->
 
-    it 'should convert array to game', ->
+    it 'should convert simple array to game', ->
+      convertedGame = arrayToGame(
+        [
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 1, 1, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0]
+        ]
+      )
+
+      expect(convertedGame.matrix).to.deep.equal([
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+      ])
+
+    it 'should convert tricky array to game', ->
       game = new Game
         width: 6
         height: 6

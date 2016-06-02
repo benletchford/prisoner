@@ -2,8 +2,9 @@ define (require) ->
 
   prisoner = require '../../src/prisoner'
 
-  Game  = prisoner.Game
-  Piece = prisoner.Piece
+  Game        = prisoner.Game
+  Piece       = prisoner.Piece
+  arrayToGame = prisoner.arrayToGame
 
   WIDTH  = 6
   HEIGHT = 6
@@ -233,6 +234,31 @@ define (require) ->
             [0, 0, 0, 0, 0, 0]
             [1, 0, 0, 0, 0, 0]
             [1, 0, 0, 0, 0, 0]
+          ]
+        )
+
+      it.only 'should move multiple steps correctly', ->
+        game = arrayToGame(
+          [
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0]
+          ]
+        )
+
+        expect(game.move(0, false, 4)).to.be.true
+
+        expect(game.matrix).to.deep.equal(
+          [
+            [0, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0]
+            [1, 1, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0]
           ]
         )
 
