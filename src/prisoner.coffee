@@ -97,8 +97,6 @@
             newBegin.y -= steps
             newEnd.y -= steps
 
-        debugger
-
         piece.begin = newBegin
         piece.end = newEnd
 
